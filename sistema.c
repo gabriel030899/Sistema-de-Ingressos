@@ -249,7 +249,3 @@ int caixa(){
         return caixa();
     }
 }
-
-// CRIAR MENSAGEM AO ACABAR OS ASSENTOS E FUNÇÃO CAIXA
-
-

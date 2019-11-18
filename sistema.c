@@ -4,7 +4,7 @@
 //Funcao inicial do programa
 void main(){
     int op;
-    printf(" - Bem vindo! - \n\nSelecione o que deseja: \n1. Comprar ingressos\n2. Quit\n\nDigite: ");
+    printf(" - Bem vindo! - \n\nSelecione o que deseja: \n\n1. Comprar ingressos\n2. Quit\n\nDigite: ");
     scanf("%d", &op);
     if(op == 1){
         return data();
@@ -14,6 +14,16 @@ void main(){
     }
     return 0;
 }
+// Variaveis Globais de compras para usar na variavel totalIngressos.
+int ingInteiro;
+int ingMeia;
+int ingTer;
+char nome[15];
+char email[50];
+// Variavel global para saber o total de ingressos comprados.
+int totalIngressos;
+int ingRestante = 10;
+int ingresso;
 // Variaveis Globais com informacoes das datas
 int diaSemana;
 int mes = 11;
@@ -30,66 +40,56 @@ int data(){
     switch(dia){
         case 1:
             system("cls");
-            printf(" - Domingo - ");
+            printf(" - Domingo - 24/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=24;
-            return compras();
+            compras();
             break;
         case 2:
             system("cls");
-            printf(" - Segunda-Feira - ");
+            printf(" - Segunda-Feira - 25/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=25;
-            return compras();
+            compras();
             break;
         case 3:
             system("cls");
-            printf(" - Terca-Feira - ");
+            printf(" - Terca-Feira - 26/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=26;
             descontoTer = 1;
-            return compras();
+            compras();
             break;
         case 4:
             system("cls");
-            printf(" - Quarta-Feira - ");
+            printf(" - Quarta-Feira - 27/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=27;
-            return compras();
+            compras();
             break;
         case 5:
             system("cls");
-            printf(" - Quinta-Feira - ");
+            printf(" - Quinta-Feira - 28/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=28;
-            return compras();
+            compras();
             break;
         case 6:
             system("cls");
-            printf(" - Sexta-Feira - ");
+            printf(" - Sexta-Feira - 29/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=29;
-            return compras();
+            compras();
             break;
         case 7:
             system("cls");
-            printf(" - Sabado - ");
+            printf(" - Sabado - 30/11/2019 - %d Lugares Restantes", ingRestante);
             diaSemana=30;
-            return compras();
+            compras();
             break;
         default:
-            return data();
+            data();
     }
 }
-// Variaveis Globais de compras para usar na variavel totalIngressos.
-int ingInteiro;
-int ingMeia;
-int ingTer;
-char nome[15];
-char email[50];
-// Variavel global para saber o total de ingressos comprados.
-int totalIngressos;
-int ingresso;
 //Funcao de compra de ingresso
 int compras(){
-
     printf("\n\n - Preencha o cadastro para efetuar a compra: \n\nPrimeiro Nome: ");
     scanf("%s", nome);
-    printf("\nE-mail que sera enviado(s) o(s) ingresso(s): ");
+    printf("\nE-mail que sera enviado o ingresso: ");
     scanf("%s", email);
 
     if(descontoTer == 1){
@@ -102,13 +102,13 @@ int compras(){
 
     }
     if (ingresso == 1){
-        ingInteiro = ingInteiro++;
+        ingInteiro = ingInteiro+1;
     }
     else if(ingresso == 2){
-        ingMeia = ingMeia++;
+        ingMeia = ingMeia+1;
     }
     else if(ingresso == 3){
-        ingTer = ingTer++;
+        ingTer = ingTer+1;
     }
     else{
         printf("Ingresso invalido");
@@ -116,12 +116,13 @@ int compras(){
     }
     // Condicao para contar o total de ingressos quando eh Terca-feira e quando nao eh.
     if (descontoTer == 1){
-        totalIngressos = totalIngressos+ingInteiro+ingMeia+ingTer;
+        totalIngressos = ingInteiro+ingMeia+ingTer;
     }
     else{
-        totalIngressos = totalIngressos+ingInteiro+ingMeia;
+        totalIngressos = +ingInteiro+ingMeia;
     }
 
+    ingRestante=10-totalIngressos;
 
     return reservarLugares();
 }
@@ -155,29 +156,71 @@ int retornar;
 void ticket(){
     switch(ingresso){
     case 1:
-        printf("\nEste ingresso foi enviado para o E-mail: %s\n\nObrigado pela compra, tenha um otimo espetaculo!\n\n*************************\n\nNome: %s\nDia: %d/%d/%d\nCadeira: %d\nIngresso: Inteiro\n\n*************************", email, nome, diaSemana, mes, ano, inputLugar);
-        printf("\n\nPara continuar comprando ingressos, digite (99): ");
+        printf(" %d Lugares Restantes\n\nEste ingresso foi enviado para o E-mail: %s\n\nObrigado pela compra, tenha um otimo espetaculo!\n\n*************************\n\nNome: %s\nDia: %d/%d/%d\nCadeira: %d\nIngresso: Inteiro\n\n*************************",ingRestante, email, nome, diaSemana, mes, ano, inputLugar);
+        if(totalIngressos >= 10){
+            caixa();
+            printf("\n\n\n\n\n\nNao ha mais lugares disponiveis!\n\n\n\n\n\n");
+            return 0;
+            }
+            else{}
+        printf("\n\nPara continuar comprando ingressos, digite (99), para acessar o caixa, digite (0): ");
         scanf("%d", &retornar);
         if(retornar == 99){
-            return data();
+            system("cls");
+            printf(" Data: %d/%d/%d\n\n - %d Lugares restantes", diaSemana, mes, ano, ingRestante);
+            if(totalIngressos >= 10){
+            caixa();
+            printf("\n\n\n\n\n\nNao ha mais lugares disponiveis!\n\n\n\n\n\n");
+            return 0;
+            }
+            else{
+                 compras();
+            }
+        }
+        else if(retornar == 0){
+             caixa();
         }
         else{}
         break;
     case 2:
-        printf("\nEste ingresso foi enviado para o E-mail: %s\n\nObrigado pela compra, tenha um otimo espetaculo!\n\n*************************\n\nNome: %s\nDia: %d/%d/%d\nCadeira: %d\nIngresso: Meia-entrada\n\n*************************", email, nome, diaSemana, mes, ano, inputLugar);
-        printf("\n\nPara continuar comprando ingressos, digite (99): ");
+        printf(" %d Lugares Restantes\n\nEste ingresso foi enviado para o E-mail: %s\n\nObrigado pela compra, tenha um otimo espetaculo!\n\n*************************\n\nNome: %s\nDia: %d/%d/%d\nCadeira: %d\nIngresso: Meia-entrada\n\n*************************",ingRestante, email, nome, diaSemana, mes, ano, inputLugar);
+        printf("\n\nPara continuar comprando ingressos, digite (99), para acessar o caixa, digite (0): ");
         scanf("%d", &retornar);
         if(retornar == 99){
-            return data();
+            system("cls");
+            printf(" Data: %d/%d/%d\n\n - %d Lugares restantes", diaSemana, mes, ano, ingRestante);
+            if(totalIngressos >= 10){
+            caixa();
+            printf("\n\n\n\n\n\nNao ha mais lugares disponiveis!\n\n\n\n\n\n");
+            return 0;
+            }
+            else{
+                 compras();
+            }
+        }
+        else if(retornar == 0){
+             caixa();
         }
         else{}
         break;
     case 3:
-        printf("\nEste ingresso foi enviado para o E-mail: %s\n\nObrigado pela compra, tenha um otimo espetaculo!\n\n*************************\n\nNome: %s\nDia: %d/%d/%d\nCadeira: %d\nIngresso: Gratuito\n\n*************************", email, nome, diaSemana, mes, ano, inputLugar);
-        printf("\n\nPara continuar comprando ingressos, digite (99): ");
+        printf(" %d Lugares restantes\n\nEste ingresso foi enviado para o E-mail: %s\n\nObrigado pela compra, tenha um otimo espetaculo!\n\n*************************\n\nNome: %s\nDia: %d/%d/%d\nCadeira: %d\nIngresso: Gratuito\n\n*************************",ingRestante, email, nome, diaSemana, mes, ano, inputLugar);
+        printf("\n\nPara continuar comprando ingressos, digite (99), para acessar o caixa, digite (0): ");
         scanf("%d", &retornar);
         if(retornar == 99){
-            return data();
+            system("cls");
+            printf(" Data: %d/%d/%d\n\n - %d Lugares restantes", diaSemana, mes, ano, ingRestante);
+            if(totalIngressos >= 10){
+            caixa();
+            printf("\n\n\n\n\n\nNao ha mais lugares disponiveis!\n\n\n\n\n\n");
+            return 0;
+            }
+            else{
+                 compras();
+            }
+        }
+        else if(retornar == 0){
+             caixa();
         }
         else{}
         break;
@@ -186,8 +229,26 @@ void ticket(){
         return compras();
     }
 }
-
-
+//Funcao do caixa
+int caixa(){
+    int opCaixa;
+    system("cls");
+    printf("Data: %d/%d/%d\n\n", diaSemana, mes, ano);
+    printf("********************************\n\n - Fechamento de caixa - \n\nTotal de ingressos vendidos: %d\n\n - Total de cada tipo de ingresso - \n\nInteiro: %d\n\nMeia-entrada: %d\n\nGratuito: %d\n\n********************************\n\nPara continuar comprando digite (0), para encerrar digite (1): ", totalIngressos, ingInteiro, ingMeia, ingTer);
+    scanf("%d", &opCaixa);
+    if(opCaixa == 0){
+        system("cls");
+        printf(" Data: %d/%d/%d\n\n - %d Lugares restantes", diaSemana, mes, ano, ingRestante);
+        return compras();
+    }
+    else if(opCaixa == 1){
+        exit(2);
+    }
+    else{
+        printf("Invalido");
+        return caixa();
+    }
+}
 
 // CRIAR MENSAGEM AO ACABAR OS ASSENTOS E FUNÇÃO CAIXA
 
